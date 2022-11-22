@@ -46,57 +46,17 @@ block content
           div.search_detail_input_box
             label(for="input_search_loc") 지역
               div.search_loc_dropdown_box
-                input(type="checkbox", name="seoul", value="서울")#seoul
-                label(for="seoul") 서울
-                input(type="checkbox", name="busan", value="부산")#busan
-                label(for="busan") 부산
-                input(type="checkbox", name="incheon", value="인천")#incheon
-                label(for="incheon") 인천
-                input(type="checkbox", name="daegu", value="대구")#daegu
-                label(for="daegu") 대구
-                input(type="checkbox", name="daejeon", value="대전")#daejeon
-                label(for="daejeon") 대전
-                input(type="checkbox", name="gwangju", value="광주")#gwangju
-                label(for="gwangju") 광주
-                input(type="checkbox", name="ulsan", value="울산")#ulsan  
-                label(for="ulsan") 울산
-                input(type="checkbox", name="sejong", value="세종")#sejong  
-                label(for="sejong") 세종
-                input(type="checkbox", name="gyeonggi", value="경기")#gyeonggi  
-                label(for="gyeonggi") 경기
-                input(type="checkbox", name="gangwon", value="강원")#gangwon  
-                label(for="gangwon") 강원
-                input(type="checkbox", name="chungbuk", value="충북")#chungbuk  
-                label(for="chungbuk") 충북
-                input(type="checkbox", name="chungnam", value="충남")#chungnam  
-                label(for="chungnam") 충남
-                input(type="checkbox", name="jeonbuk", value="전북")#jeonbuk  
-                label(for="jeonbuk") 전북
-                input(type="checkbox", name="jeonnam", value="전남")#jeonnam  
-                label(for="jeonnam") 전남
-                input(type="checkbox", name="gyeongbuk", value="경북")#gyeongbuk  
-                label(for="gyeongbuk") 경북
-                input(type="checkbox", name="gyeongnam", value="경남")#gyeongnam  
-                label(for="gyeongnam") 경남
-                input(type="checkbox", name="jeju", value="제주")#jeju  
-                label(for="jeju") 제주 
+                each area in areaInfo
+                  input(type="checkbox", 
+                      name="#{area.id}", value="#{area.id}", id="#{area.id}")
+                  label(for="#{area.id}")= area.이름
           div.search_detail_input_box
             label(for="input_search_genre") 장르
               div.search_genre_dropdown_box
-                input(type="checkbox", name="pop", value="pop")#pop
-                label(for="pop") Pop
-                input(type="checkbox", name="rock", value="rock")#rock
-                label(for="rock") Rock
-                input(type="checkbox", name="electronic", value="electronic")#electronic
-                label(for="electronic") Electronic
-                input(type="checkbox", name="hiphop", value="hiphop")#hiphop
-                label(for="hiphop") Hip-Hop
-                input(type="checkbox", name="rnb", value="rnb")#rnb
-                label(for="rnb") R&B
-                input(type="checkbox", name="jazz", value="jazz")#jazz
-                label(for="jazz") Jazz
-                input(type="checkbox", name="classic", value="classic")#classic 
-                label(for="classic") Classic     
+                each genre in genres
+                  input(type="checkbox", name="#{genre.id}", value="#{genre.id}",id="#{genre.id}")
+                  label(for="#{genre.id}")= genre.name
+
           button(type="button").btn_detail_search 검색
       table.calendar
         thead
