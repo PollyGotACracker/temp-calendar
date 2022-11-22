@@ -19,18 +19,16 @@ const servicekey =
 // 내년 국경일(공휴일 + 제헌절) 정보 업데이트
 let currentYear = new Date().getFullYear();
 
-let queryParams = "?" + encodeURIComponent("serviceKey") + "=" + servicekey;
-queryParams +=
-  "&" +
-  encodeURIComponent("solYear") +
-  "=" +
-  encodeURIComponent(`${currentYear}`);
+let queryParams = `?${encodeURIComponent("serviceKey")}=${servicekey}`;
+queryParams += `&${encodeURIComponent("solYear")}=${encodeURIComponent(
+  currentYear
+)}`;
 //queryParams +=
 //  "&" + encodeURIComponent("solMonth") + "=" + encodeURIComponent("12");
-queryParams +=
-  "&" + encodeURIComponent("numOfRows") + "=" + encodeURIComponent("100");
-queryParams +=
-  "&" + encodeURIComponent("_type") + "=" + encodeURIComponent("json");
+queryParams += `&${encodeURIComponent("numOfRows")}=${encodeURIComponent(
+  "100"
+)}`;
+queryParams += `&${encodeURIComponent("_type")}=${encodeURIComponent("json")}`;
 
 const option = {
   url: url + queryParams,
