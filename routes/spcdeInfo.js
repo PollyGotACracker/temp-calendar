@@ -45,16 +45,29 @@ const saveHoli = scheduler.scheduleJob("0 0 0 * * *", () => {
     let dataArr = {};
     try {
       let data = JSON.parse(body)["response"]["body"]["items"]["item"];
-      for (let i in data) {
-        let dateName = data[i]["dateName"];
-        let isHoliday = data[i]["isHoliday"];
-        let locdate = data[i]["locdate"];
-        let seq = data[i]["seq"];
+      for (let item in data) {
+        // 구조분해 하면서 변수 이름 변경
+        // 왼쪽(실제변수) : 오른쪽(바꿀이름)
+        const {
+          dateName: h_dateName,
+          isHoliday: h_isHoliday,
+          locdate: h_locdate,
+          seq: h_seq,
+        } = item;
+        // let dateName = item["dateName"];
+        // let isHoliday = item["isHoliday"];
+        // let locdate = item["locdate"];
+        // let seq = item["seq"];
         dataArr = {
-          h_dateName: dateName,
-          h_isHoliday: isHoliday,
-          h_locdate: locdate,
-          h_seq: seq,
+          h_dateName,
+          h_isHoliday,
+          h_locdate,
+          h_seq,
+
+          // h_dateName: dateName,
+          // h_isHoliday: isHoliday,
+          // h_locdate: locdate,
+          // h_seq: seq,
         };
         console.log(dataArr);
         await Holiday.create(dataArr);
