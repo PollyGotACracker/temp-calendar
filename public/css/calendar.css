@@ -1,0 +1,717 @@
+/* global */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  width: 100vw;
+  height: 100vh;
+}
+body,
+section {
+  width: 100%;
+  height: 100%;
+}
+input {
+  outline: none;
+}
+button {
+  cursor: pointer;
+  outline: none;
+  transition: all ease-in 0.2s;
+  user-select: none;
+}
+
+/* calendar section */
+section.calendar.container {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1%;
+}
+/* 
+cf)
+한 요소에 margin-left: auto 를 주게 되면 
+그 요소는 가장 오른쪽에 위치,
+나머지 요소들은 전부 왼쪽으로 붙는다.
+부모 요소에 적용한 자식 요소들의 가운데 정렬은 무시된다.
+*/
+
+/* 왼쪽 main 영역 */
+.calendar.main {
+  flex: 8;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 좌상단 tools 영역 */
+.calendar_tools {
+  width: 100%;
+  padding: 0 0 0.5% 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+/* paging button, h1, h2 영역 */
+.button_box {
+  flex: 7;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.number_box {
+  flex-basis: 150px;
+  flex-shrink: 1;
+  flex-grow: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+h2.year,
+h1.month {
+  white-space: nowrap;
+  user-select: none;
+}
+h1.month {
+  text-align: right;
+}
+button.prev,
+button.next {
+  width: 50px;
+  height: 50px;
+  border: none;
+  position: relative;
+  background-color: transparent;
+}
+/*
+before, after는 border로 만든 삼각형
+버튼에 hover 되면 반응
+*/
+button.prev:before,
+button.next:after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 10px);
+  width: 0;
+  height: 0;
+  cursor: pointer;
+  background-color: transparent;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  transition: all ease-in 0.2s;
+}
+button.prev:before {
+  border-left: 10px solid transparent;
+  border-right: 10px solid #181818;
+  left: calc(50% - 15px);
+}
+button.next:after {
+  border-left: 10px solid #181818;
+  border-right: 10px solid transparent;
+  left: calc(50% - 5px);
+}
+button.prev:hover:before {
+  border-right-color: orange;
+  animation: 0.3s infinite alternate linear moveLeft;
+}
+button.next:hover:after {
+  border-left-color: orange;
+  animation: 0.3s infinite alternate linear moveRight;
+}
+@keyframes moveLeft {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(-5px);
+  }
+}
+@keyframes moveRight {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(5px);
+  }
+}
+button.today {
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  width: 60px;
+  height: 30px;
+  background-color: transparent;
+}
+button.today:hover {
+  background-color: #ccc;
+}
+
+/* search 영역 */
+form.search_box {
+  position: relative;
+  flex: 3;
+  display: flex;
+  justify-content: flex-end;
+}
+form.search_box > * {
+  padding: 5px;
+}
+input.input_search {
+  border: 0;
+  width: 60%;
+  border: 1px solid #aaa;
+  border-radius: 5px 0 0 5px;
+  padding: 10px;
+}
+button.btn_search {
+  position: absolute;
+  top: 0;
+  left: calc(100% - 110px);
+  width: 30px;
+  height: 100%;
+  border: 0;
+  background-color: transparent;
+}
+button.btn_search:before,
+button.btn_search:after {
+  position: absolute;
+  content: "";
+  background-color: transparent;
+  transition: all ease-in 0.2s;
+}
+button.btn_search:before {
+  top: 24%;
+  left: calc(50% - 10px);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid #aaa;
+}
+button.btn_search:after {
+  top: calc(50% + 3px);
+  left: calc(50% - 2px);
+  width: 8px;
+  height: 8px;
+  border: 0;
+  border-top: 2px solid #aaa;
+  transform: rotate(45deg);
+}
+button.btn_search_detail {
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+  border-left: 0;
+  border-right: 1px solid #aaa;
+  border-radius: 0 5px 5px 0;
+  width: 80px;
+  padding: 0 1em;
+  background-color: transparent;
+  text-align: left;
+  position: relative;
+  white-space: nowrap;
+}
+button.btn_search_detail:hover {
+  background-color: #ccc;
+}
+.btn_search_detail_arrow {
+  position: absolute;
+  top: calc(50% - 2.5px);
+  right: 15%;
+  width: 0;
+  height: 0;
+  background-color: transparent;
+  border-top: 5px solid #181818;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+.btn_search_detail_arrow.active {
+  top: calc(50% - 7.5px);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid #181818;
+}
+
+/* search detail 버튼을 클릭할 때 나타나는 dropdown 영역 */
+.search_detail_dropdown_box {
+  width: 100%;
+  height: 0;
+  display: flex;
+  transition: height ease-in 0.2s;
+}
+form.search_detail_dropdown {
+  width: 100%;
+  height: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px;
+  opacity: 0;
+  transition: all cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.2s;
+}
+.search_detail_dropdown_box > form.search_detail_dropdown > * {
+  display: none;
+}
+.search_detail_dropdown_box.visible {
+  height: 10%;
+}
+.search_detail_dropdown_box.visible > form.search_detail_dropdown {
+  opacity: 1;
+  height: 100%;
+}
+.search_detail_dropdown_box.visible > form.search_detail_dropdown > * {
+  display: flex;
+}
+.search_detail_input_box {
+  /* width: calc(100% / 5); */
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0 5px;
+}
+.search_detail_input_box:nth-child(1) {
+  flex: 1;
+}
+.search_detail_input_box > label {
+  font-weight: 700;
+  white-space: nowrap;
+  margin: 5px;
+}
+.search_detail_input_box > input {
+  width: 80%;
+  padding: 5px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+input::placeholder {
+  color: #aaa;
+}
+input[type="date"]::-webkit-datetime-edit-text {
+  color: #aaa;
+}
+.search_detail_input_box > span {
+  display: inline-block;
+  margin: 0 5px;
+}
+form.search_detail_dropdown > button {
+  width: 80px;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  margin-left: 1%;
+  border: 1px solid #aaa;
+  background-color: transparent;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+form.search_detail_dropdown > button:hover {
+  background-color: #ccc;
+}
+
+label[for="input_search_loc"],
+label[for="input_search_genre"] {
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  position: relative;
+  padding: 3px 10px;
+  cursor: pointer;
+}
+.search_loc_dropdown_box,
+.search_genre_dropdown_box {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  display: none;
+  height: 200px;
+  overflow: hidden scroll;
+  z-index: 1;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+.search_loc_dropdown_box::-webkit-scrollbar,
+.search_genre_dropdown_box::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: #aaa;
+}
+.search_loc_dropdown_box::-webkit-scrollbar-thumb,
+.search_genre_dropdown_box::-webkit-scrollbar-thumb {
+  background: #181818;
+}
+.search_loc_dropdown_box > label,
+.search_genre_dropdown_box > label {
+  padding: 5px 15px;
+  user-select: none;
+  font-weight: normal;
+}
+.search_loc_dropdown_box > label:hover,
+.search_genre_dropdown_box > label:hover {
+  cursor: pointer;
+  background-color: #ccc;
+}
+label[for="input_search_loc"]:hover .search_loc_dropdown_box,
+label[for="input_search_genre"]:hover .search_genre_dropdown_box {
+  display: block;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+.search_loc_dropdown_box > label:before,
+.search_genre_dropdown_box > label:before {
+  content: "\2022";
+  color: #aaa;
+  margin-right: 5px;
+  font-size: 18pt;
+}
+.search_loc_dropdown_box input:checked + label:before,
+.search_genre_dropdown_box input:checked + label:before {
+  color: red;
+}
+.search_loc_dropdown_box input,
+.search_genre_dropdown_box input {
+  display: none;
+}
+
+/* calendar table 영역 */
+table.calendar {
+  flex: 8;
+  height: 100%;
+  border-collapse: collapse;
+}
+table.calendar thead tr,
+table.calendar tbody tr:nth-last-of-type(1) {
+  border-bottom: 2px solid #181818;
+}
+table.calendar thead tr th {
+  border: 0;
+  padding: 0.5em;
+  width: calc(100% / 7);
+  user-select: none;
+  font-size: 12pt;
+  font-weight: 700;
+}
+table.calendar tbody tr td {
+  border: 1px solid #ccc;
+  margin: 5px;
+  width: calc(100% / 7);
+  height: calc(100% / 6);
+  position: relative;
+  transition: background-color ease-out 0.1s;
+}
+table.calendar tbody tr td:nth-of-type(1) {
+  border-left: 0;
+}
+table.calendar tbody tr td:nth-last-of-type(1) {
+  border-right: 0;
+}
+
+/* table.calendar td 안 date_text 영역 */
+table.calendar tbody tr td .date_txt {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  /* border-radius: 50%; */
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  color: #181818;
+  font-weight: 500;
+}
+table.calendar tbody tr td:nth-of-type(1) > .date_txt {
+  color: red;
+}
+table.calendar tbody tr td:nth-last-of-type(1) > .date_txt {
+  color: blue;
+}
+table.calendar tbody tr td.today {
+  background-color: rgba(100, 100, 100, 0.1);
+}
+table.calendar tbody tr td.today > .date_txt {
+  background-color: #181818;
+  color: white;
+}
+table.calendar tbody tr td:nth-of-type(1).today > .date_txt {
+  background-color: red;
+  color: white;
+}
+table.calendar tbody tr td:nth-last-of-type(1).today > .date_txt {
+  background-color: blue;
+  color: white;
+}
+table.calendar tbody tr td.prevMonth,
+table.calendar tbody tr td.nextMonth {
+  opacity: 0.4;
+}
+table.calendar tbody tr td:hover {
+  background-color: rgba(100, 100, 100, 0.1);
+}
+
+/* table.calendar td 안 schedule 영역 */
+table.calendar tbody tr td .schedule {
+  width: 100%;
+  padding: 5px;
+  background-color: #181818;
+  color: white;
+  user-select: none;
+}
+table.calendar tbody tr td .schedule:hover {
+  cursor: pointer;
+  background-color: orange;
+}
+
+/* calendar modal 영역 */
+.calendar.modal {
+  position: absolute;
+  top: calc(50% - 30%);
+  left: calc(50% - 30%);
+  opacity: 0.8;
+  transform: scale(0.8);
+  transform-origin: center;
+  width: 60%;
+  height: 60%;
+  border-radius: 5px;
+  z-index: -2;
+  transition: all ease-out 0.3s;
+}
+.calendar.modal.visible {
+  z-index: 999;
+  background-color: #181818;
+  transform: scale(1);
+  opacity: 1;
+}
+/*
+cf)
+가운데부터 확대 효과: transform: scale, transform-origin
+fade-in, out 효과: opacity, z-index(display, visibility X)
+class가 remove 되어도 적용됨 
+*/
+.calendar.modal > .calendar.modal_content {
+  display: none;
+}
+.calendar.modal.visible > .calendar.modal_content {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  padding: 20px 30px;
+}
+.calendar.modal_content > * {
+  margin: 5px 0;
+}
+button.modal.btn_close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background-color: rgba(151, 151, 151, 0.5);
+  transition: background-color ease-out 0.1s;
+}
+button.modal.btn_close:hover {
+  background-color: rgba(151, 151, 151, 1);
+}
+.modal.main {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.modal.main > .modal.image {
+  width: 100%;
+  height: 80%;
+  background-color: white;
+  border-radius: 5px;
+}
+.modal.main > .modal.button_box {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.modal.main > .modal.button_box > button {
+  width: 40%;
+  border: 1px solid #ccc;
+  padding: 5%;
+  border-radius: 5px;
+  white-space: nowrap;
+  font-size: 12pt;
+}
+.modal.desc {
+  width: 68%;
+  height: 100%;
+  margin-left: 2%;
+}
+.modal.desc > .modal.title {
+  width: 100%;
+  height: 18%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 2%;
+}
+.modal.title > h1 {
+  font-size: 20pt;
+  font-weight: 700;
+  color: #ccc;
+}
+.modal.desc > .modal.body {
+  width: 100%;
+  height: 80%;
+  color: #ccc;
+}
+
+/* modal 이 visible 할 때 다른 영역 클릭 방지 */
+.bg_blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -3;
+  transition: all ease-out 0.3s;
+}
+.bg_blur.active {
+  /* backdrop-filter: blur(0.5px);
+  -webkit-backdrop-filter: blur(0.5px); */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+
+/* my_schedule aside 영역*/
+aside.calendar.my_schedule {
+  flex: 2;
+  margin-left: 1%;
+  height: 100%;
+}
+.ticket_shape {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* clip-path: inset(0% 0% 0% 0% round 20px); */
+}
+.ticket_shape.header {
+  width: 100%;
+  flex: 1.5;
+  background-color: #c5a773;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20pt;
+  user-select: none;
+  border-radius: 5px 5px 20px 20px;
+}
+.ticket_shape.barcode {
+  width: 10%;
+  height: 80%;
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  background: linear-gradient(
+    to bottom,
+    #181818 2%,
+    rgba(0, 0, 0, 0) 2% 5%,
+    #181818 5% 8%,
+    rgba(0, 0, 0, 0) 8% 10%,
+    #181818 10% 12%,
+    rgba(0, 0, 0, 0) 12% 15%,
+    #181818 15% 20%,
+    rgba(0, 0, 0, 0) 20% 25%,
+    #181818 25% 28%,
+    rgba(0, 0, 0, 0) 28% 30%,
+    #181818 30% 35%,
+    rgba(0, 0, 0, 0) 35% 40%,
+    #181818 40% 42%,
+    rgba(0, 0, 0, 0) 42% 43%,
+    #181818 43% 45%,
+    rgba(0, 0, 0, 0) 45% 48%,
+    #181818 48% 50%,
+    rgba(0, 0, 0, 0) 50% 52%,
+    #181818 52% 56%,
+    rgba(0, 0, 0, 0) 56% 60%,
+    #181818 60% 62%,
+    rgba(0, 0, 0, 0) 62% 64%,
+    #181818 64% 68%,
+    rgba(0, 0, 0, 0) 68% 70%,
+    #181818 70% 75%,
+    rgba(0, 0, 0, 0) 75% 78%,
+    #181818 78% 80%,
+    rgba(0, 0, 0, 0) 80% 85%,
+    #181818 85% 88%,
+    rgba(0, 0, 0, 0) 88% 90%,
+    #181818 90% 92%,
+    rgba(0, 0, 0, 0) 92% 96%,
+    #181818 96% 100%
+  );
+}
+.ticket_shape.cut {
+  width: 80%;
+  height: 1%;
+  position: absolute;
+  top: calc(100% - 2%);
+  left: 10%;
+  border-top: 5px dotted rgb(248, 244, 241);
+  z-index: 1;
+}
+.ticket_shape.body {
+  width: 100%;
+  flex: 8.5;
+  background-color: white;
+  border-radius: 20px 20px 5px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #181818;
+  position: relative;
+}
+.ticket_shape.content {
+  width: 90%;
+  height: 95%;
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid #c5a773;
+  z-index: 1;
+}
+.ticket_shape.content ul {
+  list-style: none;
+}
+.ticket_shape.content ul li {
+  padding: 5px 0;
+  color: white;
+  user-select: none;
+}
+.ticket_shape.content ul li:before {
+  content: "\2022";
+  color: #c5a773;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+.ticket_shape.content ul li:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.bg_image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: grayscale(50%);
+  opacity: 0.2;
+}

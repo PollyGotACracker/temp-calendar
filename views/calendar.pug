@@ -1,0 +1,146 @@
+extends layout
+
+block content
+  link(rel='stylesheet', href='/css/calendar.css')
+  
+  script.
+    //- console.log(#{holiArr})
+    const holiD = `#{holidays}`
+    console.log(Promise.all(holiD))
+    
+
+
+  script(src="/js/calendar.js")
+  script(src="/js/search.js")
+  section.calendar.container
+    div.calendar.main
+      div.calendar_tools
+        div.button_box
+          button.prev
+          div.number_box
+            h2.year
+            h1.month
+          button.next
+          button.today today
+        form(method="POST").search_box
+          input(type="text", placeholder="공연 일정 검색").input_search
+          button(type="button").btn_search
+          button(type="button").btn_search_detail 상세 
+            div.btn_search_detail_arrow.active
+      div.search_detail_dropdown_box.visible
+        form(method="POST").search_detail_dropdown
+          div.search_detail_input_box
+            label(for="input_search_date") 기간
+            input(type="date", name="search_start")#input_search_start
+            span -
+            input(type="date", name="search_end")#input_search_end
+          div.search_detail_input_box
+            label(for="input_search_title") 제목
+            input(type="text", name="search_title", placeholder="제목")#input_search_title
+          div.search_detail_input_box
+            label(for="input_search_place") 장소
+            input(type="text", name="search_place", placeholder="장소")#input_search_place
+          div.search_detail_input_box
+            label(for="input_search_cast") 출연진
+            input(type="text", name="search_cast", placeholder="출연진")#input_search_cast
+          div.search_detail_input_box
+            label(for="input_search_loc") 지역
+              div.search_loc_dropdown_box
+                input(type="checkbox", name="seoul", value="서울")#seoul
+                label(for="seoul") 서울
+                input(type="checkbox", name="busan", value="부산")#busan
+                label(for="busan") 부산
+                input(type="checkbox", name="incheon", value="인천")#incheon
+                label(for="incheon") 인천
+                input(type="checkbox", name="daegu", value="대구")#daegu
+                label(for="daegu") 대구
+                input(type="checkbox", name="daejeon", value="대전")#daejeon
+                label(for="daejeon") 대전
+                input(type="checkbox", name="gwangju", value="광주")#gwangju
+                label(for="gwangju") 광주
+                input(type="checkbox", name="ulsan", value="울산")#ulsan  
+                label(for="ulsan") 울산
+                input(type="checkbox", name="sejong", value="세종")#sejong  
+                label(for="sejong") 세종
+                input(type="checkbox", name="gyeonggi", value="경기")#gyeonggi  
+                label(for="gyeonggi") 경기
+                input(type="checkbox", name="gangwon", value="강원")#gangwon  
+                label(for="gangwon") 강원
+                input(type="checkbox", name="chungbuk", value="충북")#chungbuk  
+                label(for="chungbuk") 충북
+                input(type="checkbox", name="chungnam", value="충남")#chungnam  
+                label(for="chungnam") 충남
+                input(type="checkbox", name="jeonbuk", value="전북")#jeonbuk  
+                label(for="jeonbuk") 전북
+                input(type="checkbox", name="jeonnam", value="전남")#jeonnam  
+                label(for="jeonnam") 전남
+                input(type="checkbox", name="gyeongbuk", value="경북")#gyeongbuk  
+                label(for="gyeongbuk") 경북
+                input(type="checkbox", name="gyeongnam", value="경남")#gyeongnam  
+                label(for="gyeongnam") 경남
+                input(type="checkbox", name="jeju", value="제주")#jeju  
+                label(for="jeju") 제주 
+          div.search_detail_input_box
+            label(for="input_search_genre") 장르
+              div.search_genre_dropdown_box
+                input(type="checkbox", name="pop", value="pop")#pop
+                label(for="pop") Pop
+                input(type="checkbox", name="rock", value="rock")#rock
+                label(for="rock") Rock
+                input(type="checkbox", name="electronic", value="electronic")#electronic
+                label(for="electronic") Electronic
+                input(type="checkbox", name="hiphop", value="hiphop")#hiphop
+                label(for="hiphop") Hip-Hop
+                input(type="checkbox", name="rnb", value="rnb")#rnb
+                label(for="rnb") R&B
+                input(type="checkbox", name="jazz", value="jazz")#jazz
+                label(for="jazz") Jazz
+                input(type="checkbox", name="classic", value="classic")#classic 
+                label(for="classic") Classic     
+          button(type="button").btn_detail_search 검색
+      table.calendar
+        thead
+          tr
+            th Sun
+            th Mon
+            th Tue
+            th Wed
+            th Thu
+            th Fri
+            th Sat
+        tbody
+    div.calendar.modal
+      div.calendar.modal_content
+        button(type="button").modal.btn_close X
+        div.modal.main
+          div.modal.image 이미지
+          div.modal.button_box
+            button(type="button").modal#btn_info 상세정보
+            button(type="button").modal#btn_ticketing 예매하기
+        div.modal.desc
+          div.modal.title 
+            h1 제목입니다
+            label(for="input_add_list") 찜하기
+            input(type="checkbox").modal#input_add_list
+          div.modal.body
+            p Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, ut. Corporis laudantium deleniti voluptate obcaecati, atque distinctio itaque quidem autem porro dicta alias et nostrum fugit minima id perspiciatis sint!
+    aside.calendar.my_schedule
+      div.ticket_shape
+        div.ticket_shape.header 나의 일정
+          div.ticket_shape.barcode
+          div.ticket_shape.cut
+        div.ticket_shape.body
+          div.ticket_shape.content
+            ul 
+              li 가
+              li 나
+              li 다
+              li 라
+              li 마
+              li 바
+              li 사
+              li 아
+              li 자
+              li 차
+          div.bg_image
+    div.bg_blur
