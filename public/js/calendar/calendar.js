@@ -133,17 +133,20 @@ document.addEventListener("DOMContentLoaded", () => {
     } // 1달 for문 종료
 
     showNum();
+
     for (let td of document.querySelectorAll("td")) {
       const tdClassArr = Array.from(td.classList);
+      let dateTxt = td.querySelector(".date_txt");
       let holiTxt = document.createElement("div");
       holiTxt.classList.add("holi_txt");
       td.appendChild(holiTxt);
       for (let i of holiData) {
         if (tdClassArr.includes(`${i.h_locdate}`)) {
           holiTxt.textContent = i.h_dateName;
-        }
-        if (i.h_isHoliday === "Y") {
-          holiTxt.style.color = "red";
+          if (i.h_isHoliday === "Y") {
+            holiTxt.style.color = "red";
+            dateTxt.style.color = "red";
+          }
         }
       }
     }

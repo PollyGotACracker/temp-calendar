@@ -445,6 +445,13 @@ table.calendar tbody tr td:nth-last-of-type(1).today > .date_txt {
   background-color: blue;
   color: white;
 }
+table.calendar tbody tr td > .holi_txt {
+  position: absolute;
+  top: 6%;
+  left: 20%;
+  font-size: 10pt;
+}
+
 table.calendar tbody tr td.prevMonth,
 table.calendar tbody tr td.nextMonth {
   opacity: 0.4;
