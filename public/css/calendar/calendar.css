@@ -621,13 +621,13 @@ aside.calendar.my_schedule {
   border-radius: 5px 5px 20px 20px;
 }
 .ticket_shape.barcode {
-  width: 10%;
-  height: 80%;
+  width: 90%;
+  height: 20%;
   position: absolute;
   top: 10%;
   right: 5%;
   background: linear-gradient(
-    to bottom,
+    to left,
     #181818 2%,
     rgba(0, 0, 0, 0) 2% 5%,
     #181818 5% 8%,

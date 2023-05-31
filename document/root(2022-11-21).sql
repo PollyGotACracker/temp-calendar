@@ -1,6 +1,6 @@
-CREATE DATABASE tigetDB;
+CREATE DATABASE calendarDB;
 
-USE tigetDB;
+USE calendarDB;
 
 CREATE TABLE tbl_holiday(
 h_dateName	VARCHAR(50)	NOT NULL,	

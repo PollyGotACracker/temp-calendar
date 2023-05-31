@@ -18,12 +18,12 @@ import logger from "morgan";
 // MySQL Sequelize
 import DB from "../models/index.js";
 
-// sample router modules
-import indexRouter from "../routes/index.js";
+// router modules
 import calendarRouter from "../routes/calendar.js";
-import detailRouter from "../routes/detail.js";
-import usersRouter from "../routes/users.js";
-import spcdeInfo from "../routes/spcdeInfo.js";
+
+// scheduler
+import { scheduleJob } from "node-schedule";
+import { updateHoliday } from "../modules/spcdeInfo.js";
 
 // create express framework
 const app = express();
@@ -47,11 +47,7 @@ app.use(cookieParser());
 app.use(express.static(path.join("public")));
 
 // router link enable
-app.use("/", indexRouter);
-app.use("/calendar", calendarRouter);
-app.use("/detail", detailRouter);
-app.use("/data", spcdeInfo);
-app.use("/users", usersRouter);
+app.use("/", calendarRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -67,6 +63,15 @@ app.use((err, req, res, next) => {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
+});
+
+// execute scheduler
+app.listen(process.env.PORT, () => {
+  // 서버가 켜져 있을 때 매일 자정에 실행 : 0 0 0 * * *
+  // 테스트용 5초마다 실행 : */5 * * * * *
+  scheduleJob("0 0 0 * * *", async () => {
+    await updateHoliday();
+  });
 });
 
 export default app;
