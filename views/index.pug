@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  link(rel='stylesheet', href='/css/calendar/calendar.css')
+  link(rel='stylesheet', href='/css/calendar.css')
 
   //- cf)
   //- JSON.stringify 를 사용하면 
@@ -11,8 +11,8 @@ block content
   script.
     const holiData = !{JSON.stringify(holiData)}
     console.log(holiData)
-  script(src="/js/calendar/calendar.js")
-  script(src="/js/calendar/search.js")
+  script(src="/js/calendar.js")
+  script(src="/js/search.js")
   section.calendar.container
     div.calendar.main
       div.calendar_tools
